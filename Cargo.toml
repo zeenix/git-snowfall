@@ -1,6 +1,6 @@
 [package]
 name = "git-snow"
-dependencies = "Snow fall in your terminal"
+description = "Snow fall in your terminal"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
