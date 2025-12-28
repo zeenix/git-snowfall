@@ -19,7 +19,7 @@ impl Flake {
         Ok(Self {
             x: fastrand::u16(0..screen_width),
             y: 0,
-            speed: fastrand::u8(1..=3),
+            speed: fastrand::u8(1..=2),
             size: Size::new(),
         })
     }
