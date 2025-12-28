@@ -1,4 +1,5 @@
 mod animation;
+mod flake;
 
 use std::thread::spawn;
 

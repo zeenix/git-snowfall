@@ -7,41 +7,49 @@ use crossterm::{
     QueueableCommand, cursor,
     event::{self, Event, KeyCode, poll},
     execute,
-    style::{self, Stylize},
-    terminal::{self, EnterAlternateScreen, LeaveAlternateScreen, size},
+    terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
 };
 
+use crate::flake::Flake;
+
 #[derive(Debug)]
-pub struct Animation {}
+pub struct Animation {
+    flakes: Vec<Flake>,
+}
 
 impl Animation {
     pub fn new() -> Self {
-        Animation {}
+        Animation { flakes: Vec::new() }
     }
 
-    pub fn run(self) -> Result<(), std::io::Error> {
+    pub fn run(mut self) -> Result<(), std::io::Error> {
         terminal::enable_raw_mode()?;
         let mut stdout = stdout();
         execute!(stdout, EnterAlternateScreen)?;
         execute!(stdout, cursor::Hide)?;
 
-        let (center_x, center_y) = size().map(|(x, y)| (x / 2, y / 2))?;
-
-        let mut i = 0;
         loop {
-            let (s, pos_x, pos_y) = if i % 2 == 0 {
-                ("x".magenta(), center_x / 2, center_y)
-            } else {
-                ("Ж".cyan(), center_x, center_y)
-            };
-            i += 1;
+            stdout.queue(terminal::Clear(terminal::ClearType::All))?;
 
-            let _ = stdout
-                .queue(terminal::Clear(terminal::ClearType::All))?
-                .queue(cursor::MoveTo(pos_x, pos_y))?
-                .queue(style::PrintStyledContent(s))?;
+            let mut len = self.flakes.len();
+            let mut i = 0;
+            loop {
+                if i >= len {
+                    break;
+                }
 
-            // some other code ...
+                let flake = &mut self.flakes[i];
+                if !flake.update() {
+                    self.flakes.remove(i);
+                    len -= 1;
+
+                    continue;
+                }
+
+                flake.draw(&mut stdout)?;
+
+                i += 1;
+            }
 
             let _ = stdout.flush()?;
 
@@ -51,6 +59,11 @@ impl Animation {
                         break;
                     }
                 }
+            }
+
+            let n_new_flakes = fastrand::u32(1..=5);
+            for _ in 0..n_new_flakes {
+                self.flakes.push(Flake::new()?);
             }
         }
 

@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 crossterm = { version = "0.29.0", default-features = false, features = ["events"] }
+fastrand = "2.3.0"
