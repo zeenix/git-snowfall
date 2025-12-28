@@ -1,7 +1,9 @@
 [package]
 name = "git-snow"
+dependencies = "Makes snow fall in your terminal"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
 
 [dependencies]
 crossterm = { version = "0.29.0", default-features = false, features = ["events"] }
