@@ -53,7 +53,7 @@ impl Animation {
 
             let _ = stdout.flush()?;
 
-            if poll(Duration::from_millis(16))? {
+            if poll(Duration::from_millis(33))? {
                 if let Event::Key(key) = event::read()? {
                     if key.code == KeyCode::Esc {
                         break;
