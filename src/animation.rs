@@ -45,7 +45,7 @@ impl Animation {
 
             let _ = stdout.flush()?;
 
-            if poll(Duration::from_millis(100))? {
+            if poll(Duration::from_millis(16))? {
                 if let Event::Key(key) = event::read()? {
                     if key.code == KeyCode::Esc {
                         break;
