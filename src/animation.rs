@@ -37,6 +37,7 @@ impl Animation {
             i += 1;
 
             let _ = stdout
+                .queue(terminal::Clear(terminal::ClearType::All))?
                 .queue(cursor::MoveTo(pos_x, pos_y))?
                 .queue(style::PrintStyledContent(s))?;
 
