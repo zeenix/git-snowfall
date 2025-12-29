@@ -1,6 +1,6 @@
 # git-snow
 
-It's a cold dark night on the Christmas eve and instead of spending time some much needed time with family and friends, the helpless nerd that you are, you start to hack away on your hobby project. You look outside and see a lot of darkness. You wish it was snowing already and wonder how it will lift your spirits. You sigh and get back to your uncommitted changes.
+It's a cold dark night on the Christmas eve and instead of spending some much needed time with family and friends, the helpless nerd that you are, you start to hack away on your hobby project. You look outside and see a lot of darkness. You wish it was snowing already and wonder how it will lift your spirits if it was. You sigh and get back to your uncommitted changes.
 
 You then realize that you forgot what you were doing so you decide to look at the last commit. You type `git show` and hit Enter. Oh wait, what's this? you get an error message instead of contents of the last commit:
 
