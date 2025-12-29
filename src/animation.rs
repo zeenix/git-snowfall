@@ -55,7 +55,7 @@ impl Animation {
 
             if poll(Duration::from_millis(66))? {
                 if let Event::Key(key) = event::read()? {
-                    if key.code == KeyCode::Esc {
+                    if key.code == KeyCode::Esc || key.code == KeyCode::Char('q') {
                         break;
                     }
                 }
