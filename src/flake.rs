@@ -8,7 +8,6 @@ use crossterm::{
 pub struct Flake {
     x: u16,
     y: u16,
-    speed: u8,
     size: Size,
 }
 
@@ -19,14 +18,13 @@ impl Flake {
         Ok(Self {
             x: fastrand::u16(0..screen_width),
             y: 0,
-            speed: fastrand::u8(1..=2),
             size: Size::new(),
         })
     }
 
     // Update the position of the flake and return true if it's still on the screen.
     pub fn update(&mut self) -> bool {
-        self.y += self.speed as u16;
+        self.y += self.size.speed() as u16;
 
         self.y < size().unwrap().1
     }
@@ -60,6 +58,14 @@ impl Size {
             2 => Size::Medium,
             3 => Size::Large,
             _ => unreachable!(),
+        }
+    }
+
+    fn speed(&self) -> u8 {
+        match self {
+            Size::Small => 1,
+            Size::Medium => 2,
+            Size::Large => 2,
         }
     }
 }
