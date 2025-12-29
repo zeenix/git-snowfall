@@ -7,7 +7,7 @@ use crossterm::{
 #[derive(Debug, Clone, Copy)]
 pub struct Flake {
     x: u16,
-    y: u16,
+    y: f32,
     size: Size,
 }
 
@@ -17,16 +17,16 @@ impl Flake {
 
         Ok(Self {
             x: fastrand::u16(0..screen_width),
-            y: 0,
+            y: 0.0,
             size: Size::new(),
         })
     }
 
     // Update the position of the flake and return true if it's still on the screen.
     pub fn update(&mut self) -> bool {
-        self.y += self.size.speed() as u16;
+        self.y += self.size.speed();
 
-        self.y < size().unwrap().1
+        (self.y as u16) < size().unwrap().1
     }
 
     pub fn draw(&self, stdout: &mut std::io::Stdout) -> Result<(), std::io::Error> {
@@ -37,7 +37,7 @@ impl Flake {
         };
 
         let _ = stdout
-            .queue(cursor::MoveTo(self.x, self.y))?
+            .queue(cursor::MoveTo(self.x, self.y as u16))?
             .queue(style::PrintStyledContent(content))?;
 
         Ok(())
@@ -61,11 +61,11 @@ impl Size {
         }
     }
 
-    fn speed(&self) -> u8 {
+    fn speed(&self) -> f32 {
         match self {
-            Size::Small => 1,
-            Size::Medium => 2,
-            Size::Large => 2,
+            Size::Small => 0.5,
+            Size::Medium => 1.0,
+            Size::Large => 1.5,
         }
     }
 }
