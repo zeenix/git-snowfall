@@ -33,9 +33,9 @@ impl Flake {
 
     pub fn draw(&self, stdout: &mut std::io::Stdout) -> Result<(), std::io::Error> {
         let content = match self.size {
-            Size::Small => "❄".white().dim(),
-            Size::Medium => "❄".white(),
-            Size::Large => "❄".white().bold(),
+            Size::Small => '❄'.white().dim(),
+            Size::Medium => '❄'.white(),
+            Size::Large => '❄'.white().bold(),
         };
 
         let _ = stdout
